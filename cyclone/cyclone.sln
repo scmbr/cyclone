@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cyclone", "cyclone\cyclone.csproj", "{899A061A-EFE9-4CEA-BDF6-F2E31BF4885C}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CycloneSetup", "CycloneSetup\CycloneSetup.vdproj", "{B6C668C4-832B-436F-B94C-715D3C8D8FAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{899A061A-EFE9-4CEA-BDF6-F2E31BF4885C}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{899A061A-EFE9-4CEA-BDF6-F2E31BF4885C}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{899A061A-EFE9-4CEA-BDF6-F2E31BF4885C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{899A061A-EFE9-4CEA-BDF6-F2E31BF4885C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6C668C4-832B-436F-B94C-715D3C8D8FAF}.Debug|Any CPU.ActiveCfg = Release
+		{B6C668C4-832B-436F-B94C-715D3C8D8FAF}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2858BC22-931C-4957-B46F-82D4F24C3C7C}
+	EndGlobalSection
+EndGlobal
