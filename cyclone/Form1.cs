@@ -786,5 +786,11 @@ namespace cyclone
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Map map = new Map(cyclones);
+            map.ShowDialog();
+        }
     }
 }
