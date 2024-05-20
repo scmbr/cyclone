@@ -72,7 +72,7 @@ namespace cyclone
             //gmap.Dock = DockStyle.Fill;
 
             // Чья карта используется
-            gmap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
+            gmap.MapProvider = GMap.NET.MapProviders.GMapProviders.OpenStreetMap;
 
             // Загрузка этой точки на карте
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
@@ -172,19 +172,43 @@ namespace cyclone
 
                     if (same == true)
                     {
+                       
+                        if(GetDistance(cyclones[i].lat, cyclones[i].lon, sameIdCyclone.lat, sameIdCyclone.lon)<30000)
+                        {
                         List<GMap.NET.PointLatLng> points = new List<GMap.NET.PointLatLng>();
                         points.Add(new GMap.NET.PointLatLng(cyclones[i].lat, cyclones[i].lon));
                         points.Add(new GMap.NET.PointLatLng(sameIdCyclone.lat, sameIdCyclone.lon));
-
                         GMap.NET.WindowsForms.GMapRoute route = new GMap.NET.WindowsForms.GMapRoute(points, $"Route {cyclones[i].id}");
                         route.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 2);
-                        if(route.Distance > 6000)
-                        {
-                        MessageBox.Show(Convert.ToString(route.Distance));
-                        }
-                    linesOverlay.Routes.Add(route);
 
-                }
+                        linesOverlay.Routes.Add(route);
+                        }
+                        else
+                        {
+                        if (cyclones[i].lon < 0)
+                        {
+                            List<GMap.NET.PointLatLng> points1 = new List<GMap.NET.PointLatLng>();
+                            List<GMap.NET.PointLatLng> points2 = new List<GMap.NET.PointLatLng>();
+                            points1.Add(new GMap.NET.PointLatLng(cyclones[i].lat, cyclones[i].lon));
+                            points2.Add(new GMap.NET.PointLatLng(sameIdCyclone.lat, sameIdCyclone.lon));
+
+                            double y = Math.Abs(cyclones[i].lat - sameIdCyclone.lat);
+                            double x = Math.Abs(cyclones[i].lon - sameIdCyclone.lon);
+                            double x0 = Math.Abs(-180 - cyclones[i].lon);
+                            double y0 = (y * x0) / x;
+                            points2.Add((new GMap.NET.PointLatLng(y0 + cyclones[i].lat, 180)));
+                            points1.Add((new GMap.NET.PointLatLng(y0 + cyclones[i].lat, -180)));
+                            GMap.NET.WindowsForms.GMapRoute route1 = new GMap.NET.WindowsForms.GMapRoute(points1, $"Route {cyclones[i].id}");
+                            route1.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 2);
+                            GMap.NET.WindowsForms.GMapRoute route2 = new GMap.NET.WindowsForms.GMapRoute(points2, $"Route {cyclones[i].id}");
+                            route2.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 2);
+                            linesOverlay.Routes.Add(route1);
+                            linesOverlay.Routes.Add(route2);
+                        }
+                    }
+                        
+
+                    }
                     else
                     {
                         hex = $"#{GetRandomHexString(6)}";
@@ -251,21 +275,28 @@ namespace cyclone
 
             return ColorTranslator.ToHtml(darkenedColor);
         }
-
+        public double GetDistance(double lat1, double lon1, double lat2, double lon2) 
+        {
+            double a = Math.Abs(lon1 - lon2);
+            double b = Math.Abs(lat1 - lat2);
+            double c = Math.Sqrt(a * a + b * b);
+            return c * 111.19492664138056;
+        }
         private void gmap_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                var point = gmap.FromLocalToLatLng(e.X, e.Y);
-                double lat = point.Lat;
-                double lon = point.Lng;
-                //this the the values of latitude in double when you click 
-                double newPointLat = lat;
-                //this the the values of longitude in double when you click 
-                double newPointLong = lon;
-                MessageBox.Show($"{lat} {lon}");
-            }
-            MessageBox.Show("ЗАЛУПА");
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    var point = gmap.FromLocalToLatLng(e.X, e.Y);
+            //    double lat = point.Lat;
+            //    double lon = point.Lng;
+            //    //this the the values of latitude in double when you click 
+            //    double newPointLat = lat;
+            //    //this the the values of longitude in double when you click 
+            //    double newPointLong = lon;
+            //    MessageBox.Show($"{lat} {lon}");
+            //}
+            //MessageBox.Show("ЗАЛУПА");
         }
+        
     }
 }
