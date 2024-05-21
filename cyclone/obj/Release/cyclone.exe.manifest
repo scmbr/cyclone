@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="cyclone.exe" size="108008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="cyclone.exe" size="110568">
       <assemblyIdentity name="cyclone" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>UMNCvmi/dnRYVGuLLIkBvs9+QUoBUZQ/0Ouu2XrPUbs=</dsig:DigestValue>
+        <dsig:DigestValue>izZwdV3zCc+TslFiM7bQ0Grc1DLbJB03Djy2+woNqws=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

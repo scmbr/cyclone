@@ -73,10 +73,10 @@ namespace cyclone
 
             // Чья карта используется
             gmap.MapProvider = GMap.NET.MapProviders.GMapProviders.OpenStreetMap;
-
+            gmap.ShowCenter = false;
             // Загрузка этой точки на карте
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
-            gmap.Position = new GMap.NET.PointLatLng(62, 129);
+            //gmap.Position = new GMap.NET.PointLatLng(62, 129);
 
             //// Создаём новый список маркеров
             //GMapOverlay markersOverlay = new GMapOverlay("markers");
@@ -147,11 +147,11 @@ namespace cyclone
                
 
                 // Создание маркера для циклона
-                GMarkerGoogle marker = new GMarkerGoogle(new GMap.NET.PointLatLng(cyclones[i].lat, cyclones[i].lon), CreateCircleBitmap(4, randomColor));
+                GMarkerGoogle marker = new GMarkerGoogle(new GMap.NET.PointLatLng(cyclones[i].lat, cyclones[i].lon), CreateCircleBitmap(5, randomColor));
                 marker.ToolTip = new GMap.NET.WindowsForms.ToolTips.GMapRoundedToolTip(marker);
-
+                
                 // Текст отображаемый с маркером
-                marker.ToolTipText = $"{cyclones[i].lat} {cyclones[i].lon} {hex} {darkHex}";
+                marker.ToolTipText = $" Id: {cyclones[i].CycloneId} \n lat:{cyclones[i].lat} \n lon:{cyclones[i].lon} \n date: {cyclones[i].day}.{cyclones[i].month}.{cyclones[i].year} {cyclones[i].hour}:00 \n area:{cyclones[i].area} \n radius: {cyclones[i].radius} \n depth:{cyclones[i].depth}";
                 markersOverlay.Markers.Add(marker);
                 List < GMap.NET.WindowsForms.GMapRoute > routes = new List<GMap.NET.WindowsForms.GMapRoute>();
 
@@ -179,8 +179,9 @@ namespace cyclone
                         points.Add(new GMap.NET.PointLatLng(cyclones[i].lat, cyclones[i].lon));
                         points.Add(new GMap.NET.PointLatLng(sameIdCyclone.lat, sameIdCyclone.lon));
                         GMap.NET.WindowsForms.GMapRoute route = new GMap.NET.WindowsForms.GMapRoute(points, $"Route {cyclones[i].id}");
-                        route.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 2);
-
+                        route.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 4);
+                        route.Stroke.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                        
                         linesOverlay.Routes.Add(route);
                         }
                         else
@@ -199,9 +200,33 @@ namespace cyclone
                             points2.Add((new GMap.NET.PointLatLng(y0 + cyclones[i].lat, 180)));
                             points1.Add((new GMap.NET.PointLatLng(y0 + cyclones[i].lat, -180)));
                             GMap.NET.WindowsForms.GMapRoute route1 = new GMap.NET.WindowsForms.GMapRoute(points1, $"Route {cyclones[i].id}");
-                            route1.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 2);
+                            route1.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 4);
+                            route1.Stroke.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
                             GMap.NET.WindowsForms.GMapRoute route2 = new GMap.NET.WindowsForms.GMapRoute(points2, $"Route {cyclones[i].id}");
-                            route2.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 2);
+                            route2.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 4);
+                            route2.Stroke.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                            linesOverlay.Routes.Add(route1);
+                            linesOverlay.Routes.Add(route2);
+                        }
+                        if (cyclones[i].lon > 0)
+                        {
+                            List<GMap.NET.PointLatLng> points1 = new List<GMap.NET.PointLatLng>();
+                            List<GMap.NET.PointLatLng> points2 = new List<GMap.NET.PointLatLng>();
+                            points1.Add(new GMap.NET.PointLatLng(cyclones[i].lat, cyclones[i].lon));
+                            points2.Add(new GMap.NET.PointLatLng(sameIdCyclone.lat, sameIdCyclone.lon));
+
+                            double y = Math.Abs(cyclones[i].lat - sameIdCyclone.lat);
+                            double x = Math.Abs(cyclones[i].lon - sameIdCyclone.lon);
+                            double x0 = Math.Abs(180 - cyclones[i].lon);
+                            double y0 = (y * x0) / x;
+                            points2.Add((new GMap.NET.PointLatLng(y0 + cyclones[i].lat, -180)));
+                            points1.Add((new GMap.NET.PointLatLng(y0 + cyclones[i].lat, 180)));
+                            GMap.NET.WindowsForms.GMapRoute route1 = new GMap.NET.WindowsForms.GMapRoute(points1, $"Route {cyclones[i].id}");
+                            route1.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 4);
+                            route1.Stroke.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                            GMap.NET.WindowsForms.GMapRoute route2 = new GMap.NET.WindowsForms.GMapRoute(points2, $"Route {cyclones[i].id}");
+                            route2.Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(200, randomColor), 4);
+                            route2.Stroke.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
                             linesOverlay.Routes.Add(route1);
                             linesOverlay.Routes.Add(route2);
                         }
@@ -211,10 +236,7 @@ namespace cyclone
                     }
                     else
                     {
-                        hex = $"#{GetRandomHexString(6)}";
-                        darkHex = DarkenHexColor(hex, 10);
-                        col = System.Drawing.ColorTranslator.FromHtml(hex);
-                        darkCol = System.Drawing.ColorTranslator.FromHtml(darkHex);
+                       
                         randomColor = System.Drawing.Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
                         //MessageBox.Show(hex + darkHex);
                         // Создание слоя для линий
@@ -228,6 +250,7 @@ namespace cyclone
             
             gmap.Overlays.Add(markersOverlay);
             gmap.Show();
+
         }
        
         public static string GetRandomHexString(int length)
@@ -284,19 +307,56 @@ namespace cyclone
         }
         private void gmap_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    var point = gmap.FromLocalToLatLng(e.X, e.Y);
-            //    double lat = point.Lat;
-            //    double lon = point.Lng;
-            //    //this the the values of latitude in double when you click 
-            //    double newPointLat = lat;
-            //    //this the the values of longitude in double when you click 
-            //    double newPointLong = lon;
-            //    MessageBox.Show($"{lat} {lon}");
-            //}
-            //MessageBox.Show("ЗАЛУПА");
+           
         }
-        
+
+        private void сохранитьИзображениеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SaveFileDialog dialogforsavemap = new SaveFileDialog())
+                {
+                    // Формат картинки
+                    dialogforsavemap.Filter = "PNG (*.png)|*.png";
+
+                    // Название картинки
+                    dialogforsavemap.FileName = "Текущее положение карты";
+
+                    Image image = gmap.ToImage();
+
+                    if (image != null)
+                    {
+                        using (image)
+                        {
+                            if (dialogforsavemap.ShowDialog() == DialogResult.OK)
+                            {
+                                string fileName = dialogforsavemap.FileName;
+                                if (!fileName.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                                    fileName += ".png";
+
+                                image.Save(fileName);
+                                MessageBox.Show("Карта успешно сохранена в директории: " + Environment.NewLine + dialogforsavemap.FileName, "GMap.NET", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Если ошибка
+            catch (Exception exception)
+            {
+                MessageBox.Show("Ошибка при сохранении карты: " + Environment.NewLine + exception.Message, "GMap.NET", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+        }
+
+        private void поменятьЦветаРандомToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gmap.Overlays.Clear();
+            GMap.NET.PointLatLng p = new GMap.NET.PointLatLng(gmap.Position.Lat,gmap.Position.Lng);
+            double z = gmap.Zoom;
+            gMapControl1_Load(sender, e);
+            gmap.Position = p;
+            gmap.Zoom = z;
+        }
     }
 }
