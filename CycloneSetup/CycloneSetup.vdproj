@@ -1434,7 +1434,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CycloneSetup"
         "ProductCode" = "8:{8B784DF2-F6C1-4082-9C5B-9BFCAA504383}"
-        "PackageCode" = "8:{3A54068B-BE5B-491F-A83C-1F8D17E9BE76}"
+        "PackageCode" = "8:{3785F285-6538-48BD-989E-B122F238B11F}"
         "UpgradeCode" = "8:{5A3462E7-C9B8-46F5-A601-805D76834C75}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

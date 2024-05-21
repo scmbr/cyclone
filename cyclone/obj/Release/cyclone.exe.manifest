@@ -302,4 +302,22 @@
       <dsig:DigestValue>MD8u539BoS8oJrWNQIfeHlY1JEOle4ihuSHL1GgKyXg=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="x64\sqlite3.dll" size="1680384">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zdbEB7YTcSgOScmis0r07AawGRmT5u3o77kjWZCDeXc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="x86\sqlite3.dll" size="826775">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>bersL5bIocIGmKk93UaNVEe1WsQm3Dge712RsZlTu3s=</dsig:DigestValue>
+    </hash>
+  </file>
 </asmv1:assembly>
