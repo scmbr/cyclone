@@ -248,7 +248,7 @@ namespace cyclone
                     
                     problemFile = path;
                     string[] csvLines = System.IO.File.ReadAllLines(path);
-                    string[] order = csvLines[0].Split(',');
+                    string[] order = csvLines[0].Split(',',';');
 
                     int[] rightOrderIndex = new int[order.Length];
                     string[] rightOrder = { "year", "month", "day", "hour", "time", "id", "pid", "ptid", "x", "y", "lat", "lon", "p_cent", "p_edge", "area", "radius", "depth", "p_grad", "DsqP", "type", "centers", "Ege", "Erg", "Ely", "Esp", "Emg", "Dp", "u", "v", "uv", "DpDt" };
@@ -262,13 +262,20 @@ namespace cyclone
                             }
                         }
                     }
-
+                   
                     for (int i = 1; i < csvLines.Length; i++)
                     {
-                        string[] data = csvLines[i].Split(',');
-                        Cyclones c = new Cyclones(data[rightOrderIndex[0]], data[rightOrderIndex[1]], data[rightOrderIndex[2]], data[rightOrderIndex[3]], data[rightOrderIndex[4]], data[rightOrderIndex[5]], data[rightOrderIndex[6]], data[rightOrderIndex[7]], data[rightOrderIndex[8]], data[rightOrderIndex[9]], data[rightOrderIndex[10]], data[rightOrderIndex[11]], data[rightOrderIndex[12]], data[rightOrderIndex[13]], data[rightOrderIndex[14]], data[rightOrderIndex[15]], data[rightOrderIndex[16]], data[rightOrderIndex[17]], data[rightOrderIndex[18]], data[rightOrderIndex[19]], data[rightOrderIndex[20]], data[rightOrderIndex[21]], data[rightOrderIndex[22]], data[rightOrderIndex[23]], data[rightOrderIndex[24]], data[rightOrderIndex[25]], data[rightOrderIndex[26]], data[rightOrderIndex[27]], data[rightOrderIndex[28]], data[rightOrderIndex[29]], data[rightOrderIndex[30]]);
-                        c.CycloneId = id;
-                        cyclones.Add(c);
+                        try
+                        {
+                            string[] data = csvLines[i].Split(',',';');
+                            Cyclones c = new Cyclones(data[rightOrderIndex[0]], data[rightOrderIndex[1]], data[rightOrderIndex[2]], data[rightOrderIndex[3]], data[rightOrderIndex[4]], data[rightOrderIndex[5]], data[rightOrderIndex[6]], data[rightOrderIndex[7]], data[rightOrderIndex[8]], data[rightOrderIndex[9]], data[rightOrderIndex[10]], data[rightOrderIndex[11]], data[rightOrderIndex[12]], data[rightOrderIndex[13]], data[rightOrderIndex[14]], data[rightOrderIndex[15]], data[rightOrderIndex[16]], data[rightOrderIndex[17]], data[rightOrderIndex[18]], data[rightOrderIndex[19]], data[rightOrderIndex[20]], data[rightOrderIndex[21]], data[rightOrderIndex[22]], data[rightOrderIndex[23]], data[rightOrderIndex[24]], data[rightOrderIndex[25]], data[rightOrderIndex[26]], data[rightOrderIndex[27]], data[rightOrderIndex[28]], data[rightOrderIndex[29]], data[rightOrderIndex[30]]);
+                            c.CycloneId = id;
+                            cyclones.Add(c);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.Message);
+                        }
                         
                     }
                     id++;

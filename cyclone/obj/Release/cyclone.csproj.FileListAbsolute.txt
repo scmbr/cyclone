@@ -78,3 +78,6 @@ C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\bin\Release\System.Security.P
 C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\obj\Release\cyclone.Map.resources
 C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\bin\Release\x86\sqlite3.dll
 C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\bin\Release\x64\sqlite3.dll
+C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\bin\Release\Microsoft.Data.Sqlite.dll
+C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\bin\Release\SQLitePCLRaw.core.dll
+C:\Users\Gigabyte\Documents\GitHub\cyclone\cyclone\bin\Release\Microsoft.Data.Sqlite.xml

@@ -59,8 +59,8 @@ namespace cyclone
             this.ptid = double.Parse(ptid, CultureInfo.InvariantCulture);
             this.x = int.Parse(x);
             this.y = int.Parse(y);
-            this.lat = Math.Round(Convert.ToDouble(lat.Replace(".", ",")),2);
-            this.lon = Math.Round(Convert.ToDouble(lon.Replace(".", ",")),2);
+            this.lat = double.Parse(lat,CultureInfo.InvariantCulture);
+            this.lon = double.Parse(lon, CultureInfo.InvariantCulture);
             this.p_cent = p_cent;
             this.p_edge = p_edge;
             this.area = int.Parse(area);
