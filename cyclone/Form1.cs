@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Globalization;
@@ -37,8 +38,8 @@ namespace cyclone
 
         private void файлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-                ofd.Filter = "*.CSV|*.csv";
+
+                ofd.Filter = "Files|*.xls;*.xlsx;*csv";
                 ofd.Multiselect = true;
 
 
@@ -242,43 +243,70 @@ namespace cyclone
                 cyclones.Clear();
                 foreach (string path in FilesPath)
                 {
-                    
-                        
-                    
-                    
-                    problemFile = path;
-                    string[] csvLines = System.IO.File.ReadAllLines(path);
-                    string[] order = csvLines[0].Split(',',';');
 
-                    int[] rightOrderIndex = new int[order.Length];
-                    string[] rightOrder = { "year", "month", "day", "hour", "time", "id", "pid", "ptid", "x", "y", "lat", "lon", "p_cent", "p_edge", "area", "radius", "depth", "p_grad", "DsqP", "type", "centers", "Ege", "Erg", "Ely", "Esp", "Emg", "Dp", "u", "v", "uv", "DpDt" };
-                    for (int i = 0; i < rightOrder.Length; i++)
+
+                    string fileExtension = System.IO.Path.GetExtension(path);
+                    if (fileExtension == ".xlsx")
                     {
-                        for (int j = 0; j < order.Length; j++)
+                        ExcelPackage excelPackage = new ExcelPackage(path);
+                        var workbook = excelPackage.Workbook;
+                        var worksheet = workbook.Worksheets[0];
+                        for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
                         {
-                            if (rightOrder[i] == order[j])
+                            Cyclones cyclone = new Cyclones();
+                            cyclone.year = int.Parse(worksheet.Cells[row, 2].Value.ToString());
+                            cyclone.month = int.Parse(worksheet.Cells[row, 3].Value.ToString());
+                            cyclone.day = int.Parse(worksheet.Cells[row, 4].Value.ToString());
+                            cyclone.hour = int.Parse(worksheet.Cells[row, 5].Value.ToString());
+                            cyclone.CycloneId = int.Parse(worksheet.Cells[row, 6].Value.ToString());
+                           
+                            cyclone.lat = double.Parse(worksheet.Cells[row, 7].Value.ToString());
+                            cyclone.lon = double.Parse(worksheet.Cells[row, 8].Value.ToString());
+                            cyclone.radius = worksheet.Cells[row, 9].Value.ToString();
+                            cyclone.area = int.Parse(worksheet.Cells[row, 10].Value.ToString());
+                            cyclone.depth = worksheet.Cells[row, 11].Value.ToString();
+                            cyclones.Add(cyclone);
+                            //MessageBox.Show(cyclone.CycloneId.ToString());
+                        }
+
+                        //MessageBox.Show("Hello, world!");
+                    }
+                    else
+                    {
+                        problemFile = path;
+                        string[] csvLines = System.IO.File.ReadAllLines(path);
+                        string[] order = csvLines[0].Split(',', ';');
+                        int[] rightOrderIndex = new int[order.Length];
+                        string[] rightOrder = { "year", "month", "day", "hour", "time", "id", "pid", "ptid", "x", "y", "lat", "lon", "p_cent", "p_edge", "area", "radius", "depth", "p_grad", "DsqP", "type", "centers", "Ege", "Erg", "Ely", "Esp", "Emg", "Dp", "u", "v", "uv", "DpDt" };
+                        for (int i = 0; i < rightOrder.Length; i++)
+                        {
+                            for (int j = 0; j < order.Length; j++)
                             {
-                                rightOrderIndex[i] = j; break;
+                                if (rightOrder[i] == order[j])
+                                {
+                                    rightOrderIndex[i] = j; break;
+                                }
                             }
                         }
-                    }
-                   
-                    for (int i = 1; i < csvLines.Length; i++)
-                    {
-                        try
+
+                        for (int i = 1; i < csvLines.Length; i++)
                         {
-                            string[] data = csvLines[i].Split(',',';');
-                            Cyclones c = new Cyclones(data[rightOrderIndex[0]], data[rightOrderIndex[1]], data[rightOrderIndex[2]], data[rightOrderIndex[3]], data[rightOrderIndex[4]], data[rightOrderIndex[5]], data[rightOrderIndex[6]], data[rightOrderIndex[7]], data[rightOrderIndex[8]], data[rightOrderIndex[9]], data[rightOrderIndex[10]], data[rightOrderIndex[11]], data[rightOrderIndex[12]], data[rightOrderIndex[13]], data[rightOrderIndex[14]], data[rightOrderIndex[15]], data[rightOrderIndex[16]], data[rightOrderIndex[17]], data[rightOrderIndex[18]], data[rightOrderIndex[19]], data[rightOrderIndex[20]], data[rightOrderIndex[21]], data[rightOrderIndex[22]], data[rightOrderIndex[23]], data[rightOrderIndex[24]], data[rightOrderIndex[25]], data[rightOrderIndex[26]], data[rightOrderIndex[27]], data[rightOrderIndex[28]], data[rightOrderIndex[29]], data[rightOrderIndex[30]]);
-                            c.CycloneId = id;
-                            cyclones.Add(c);
+                            try
+                            {
+                                string[] data = csvLines[i].Split(',', ';');
+                                Cyclones c = new Cyclones(data[rightOrderIndex[0]], data[rightOrderIndex[1]], data[rightOrderIndex[2]], data[rightOrderIndex[3]], data[rightOrderIndex[4]], data[rightOrderIndex[5]], data[rightOrderIndex[6]], data[rightOrderIndex[7]], data[rightOrderIndex[8]], data[rightOrderIndex[9]], data[rightOrderIndex[10]], data[rightOrderIndex[11]], data[rightOrderIndex[12]], data[rightOrderIndex[13]], data[rightOrderIndex[14]], data[rightOrderIndex[15]], data[rightOrderIndex[16]], data[rightOrderIndex[17]], data[rightOrderIndex[18]], data[rightOrderIndex[19]], data[rightOrderIndex[20]], data[rightOrderIndex[21]], data[rightOrderIndex[22]], data[rightOrderIndex[23]], data[rightOrderIndex[24]], data[rightOrderIndex[25]], data[rightOrderIndex[26]], data[rightOrderIndex[27]], data[rightOrderIndex[28]], data[rightOrderIndex[29]], data[rightOrderIndex[30]]);
+                                c.CycloneId = id;
+                                cyclones.Add(c);
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.Message);
+                            }
+
                         }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show(e.Message);
-                        }
-                        
+                        id++;
                     }
-                    id++;
+                    //MessageBox.Show(cyclones[0].ToString());
                 }
             }
             catch (Exception updateExc) {
