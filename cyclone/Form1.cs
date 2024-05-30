@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Drawing;
-using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using OfficeOpenXml;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace cyclone
 {
@@ -72,21 +64,9 @@ namespace cyclone
                     }
                     countLabel.Text = Convert.ToString(uniqFiles.Count);
                    
-                    //foreach (string fileName in ofdSelectedFilesNames)
-                    //{
-                    //    if (!uniqFiles.Contains(fileName))
-                    //    {
-                    //        dataGridView1.Rows.Add(fileName);
-                    //        uniqFiles.Add(fileName);
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show($"Файл с именем {fileName} уже добавлен!"); ; ;
-                    //    }
-                    //}
-
+         
                 }
-            //UpdateCyclones();
+
         }
 
         private void папкуToolStripMenuItem_Click(object sender, EventArgs e)
@@ -99,9 +79,9 @@ namespace cyclone
                 {
 
                     string folderName = fbd.SelectedPath;
-                    DirectoryInfo folder = new DirectoryInfo(folderName); //Assuming Test is your Folder
+                    DirectoryInfo folder = new DirectoryInfo(folderName); 
 
-                    FileInfo[] Files = folder.GetFiles("*.csv", SearchOption.AllDirectories); //Getting Text files
+                    FileInfo[] Files = folder.GetFiles("*.csv", SearchOption.AllDirectories); 
                     string repeats = "\n";
                     for (int i = 0; i < Files.Length; i++)
                     {
@@ -126,7 +106,7 @@ namespace cyclone
                     countLabel.Text = Convert.ToString(uniqFiles.Count);
                     
                 }
-            //UpdateCyclones();
+     
 
         }
 
@@ -146,7 +126,7 @@ namespace cyclone
                 }
             }
             countLabel.Text = Convert.ToString(uniqFiles.Count);
-            //UpdateCyclones();
+          
             
         }
         private void Sort()

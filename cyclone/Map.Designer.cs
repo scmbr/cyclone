@@ -85,8 +85,8 @@
             // поменятьЦветаРандомToolStripMenuItem
             // 
             this.поменятьЦветаРандомToolStripMenuItem.Name = "поменятьЦветаРандомToolStripMenuItem";
-            this.поменятьЦветаРандомToolStripMenuItem.Size = new System.Drawing.Size(160, 20);
-            this.поменятьЦветаРандомToolStripMenuItem.Text = "Поменять цвета (Рандом)";
+            this.поменятьЦветаРандомToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
+            this.поменятьЦветаРандомToolStripMenuItem.Text = "Поменять цвета";
             this.поменятьЦветаРандомToolStripMenuItem.Click += new System.EventHandler(this.поменятьЦветаРандомToolStripMenuItem_Click);
             // 
             // Map
